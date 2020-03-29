@@ -2,6 +2,8 @@ require 'httparty'
 require 'pry'
 
 #require_relative file that live in app
-require_relative "../lib/rickandmorty_guide/api"
-require_relative "../lib/rickandmorty_guide/cli"
-require_relative "../lib/rickandmorty_guide/rickandmorty_guide.rb/version"
+require 'require_all'
+require_all './lib'
+# require_relative "../lib/api.rb"
+# require_relative "../lib/cli.rb"
+# require_relative "../lib/rickandmorty_guide/version"
