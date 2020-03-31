@@ -1,8 +1,7 @@
 # RickandmortyGuide
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rickandmorty_guide`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+rick and morty guide is a index of anything you might like to know 
+in theory the first prompt would ask the user what they would like to know, characters, episodes etc..
 
 ## Installation
 
@@ -32,7 +31,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rickandmorty_guide.
+Bug reports and pull requests are welcome on GitHub at https://github.com/[Hurly77]/rickandmorty_guide.
 
 
 ## License
@@ -40,3 +39,5 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
 # rickandmorty_guide
+rick and morty guide is a index of anything you might like to know 
+in theory the first prompt would ask the user what they would like to know, characters, episodes etc..

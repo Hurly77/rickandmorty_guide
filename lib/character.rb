@@ -6,16 +6,20 @@ class Character
         hash.each {|key, value|
         self.send(("#{key}="), value)}
         @@all << self
-        # Episode.all.each {|obj| obj.characters = self}
-        # binding.pry
     end
 
     def self.all
         @@all
     end
 
-    def self.list_characters
-        self.all(&:name).each {|char| puts "#{char.id}. #{char.name}"}  
+    def self.char_urls
+        char = Episode.all.map {|obj| obj.characters}
+        char = char.flatten.uniq
+        char = char.sort_by do |str| str[42, 3].to_i end
     end
 
+    def self.find_by_name(name)
+        self.all.find {|char| char.name == name}
+     end
+    
 end

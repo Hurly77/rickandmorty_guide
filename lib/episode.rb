@@ -17,7 +17,7 @@ class Episode
     end
 
     def self.find_by_name(name)
-        self.all.find {|eps| eps.name == name }
+        self.all.find {|eps| eps.name == name}
     end
     
     def self.chars_from_episode(name)
