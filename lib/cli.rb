@@ -2,123 +2,119 @@ class CLI
     
     def start
         API.episodes
-        self.welcome
-        self.valid
-        
-        # self.get_episode_list
-        # self.call
+        self.welcome        
     end
 
     def welcome
        input = ''
         puts "\nWelcome to..." 
-        sleep 1.5
+        sleep 1
         puts "Interdimensional CLI"
-        sleep 1.5
+        sleep 1
         puts "\nPLEASE SELECT A CHOICE"
-        puts "To see episodes in chronological, 'list'"
-        puts "To see a list of characters, 'char list'"
-        puts "To select characters by episode 'by episode'"
-        puts "To select see more information on characters you love 'info'"
-        puts "to see all the episodes a character was featured in 'by character'"
-        puts "or to exit, 'exit'"
+        puts "Type '1' To see episodes in chronological."
+        puts "Type '2' To see a list of characters."
+        puts "Type '3' To select characters by episode."
+        puts "Type '4' To see more information on characters you love."
         puts "To see list again enter 'menu'"
+        puts "or to exit, 'exit'\n"
         input = gets.strip.downcase
-            
-            if input == 'eps list'
+            if input == '1'
                 list_episodes
-            elsif input == 'char list'
+                self.back
+
+            elsif input == '2'
                 list_characters
+                self.back
     
-            elsif input == 'by episode'
+            elsif input == '3'
                 list_charaters_by_episode
+                self.back
     
-            elsif input == 'info'
+            elsif input == '4'
                 character_info
-    
+                self.back
+
             elsif input == 'menu'
-                    welcome
-            end
-    end
-
-    def valid
-        input = ''
-        if input == 'eps list'
-            list_episodes
-        elsif input == 'char list'
-            list_characters
-
-        elsif input == 'by episode'
-            list_charaters_by_episode
-
-        elsif input == 'info'
-            character_info
-
-        elsif input == 'menu'
                 welcome
-        end
-        input = gets.strip.downcase
-    end
 
+            elsif input == 'exit'
+                exit!
+
+            else
+                puts "Invalid try again!"
+                sleep 2 
+                welcome
+             end
+    end
 
     def list_episodes
         puts "\nall episodes in chonological order"
-        sleep 1.5
+        sleep 1
         Episode.list_episodes 
-        self.back   
     end
     
 
     def list_characters
+        Character.first_ten
         input = ''
-        char = Character.char_urls[0, 10]
-        API.characters(char)
-        Character.all(&:name).each.with_index(1) {|char, idx| puts "#{idx} #{char.name}"}
-        puts "For more characters 'm'"
+        input = gets.chomp.downcase
         i = 10
-        input = gets.chomp
         while input == 'm'
             input = ''
             char = Character.char_urls[i, 10]
             API.characters(char)
-            Character.all(&:name).each.with_index(1){|char, idx| puts "#{idx} #{char.name}"}
-            i+= 10 
-            input = gets.chomp.downcase
-            puts "For more characters 'm'"
+            Character.all.last(10).each do |char| 
+                puts "#{char.id}. #{char.name}"
+                sleep 0.1
+            end
+                i+= 10 
+            input = gets.chomp
         end
     end
 
     def list_charaters_by_episode
-        input = ''
+        puts "\n"
         list_episodes
-        puts "please enter the episode name:"
-        input = gets.chomp
+        puts "please enter the episode number:"
+        input = ''
+        input = gets.chomp.to_i
         urls = Episode.chars_from_episode(input)
-        puts "Loading..."
-        if API.characters(urls)
-         Character.all(&:name).each.with_index(1) do |char, idx|
-        puts "#{idx} #{char.name}"
-         end
+        API.characters(urls)
+        Character.all.last(10).each do |char| 
+            puts "#{char.id}. #{char.name}" 
+            sleep 0.1
         end
-        self.back
     end
 
     def character_info
+       puts "\n"
        input = ''
        list_characters
-       puts "Type the name of the character you'd like to know more about:"
-       input = gets.chomp
+       puts "Type the number of the character you would like to know more about:"
+       input = gets.chomp.to_i
        char = Character.find_by_name(input)
-       puts "#{char.name} is #{char.gender} #{char.species} and he is #{char.status} on #{char.location["name"]} and originated from #{char.origin["name"]}."
-       self.back
+       sleep 1
+       puts "\n#{char.name} is a #{char.gender} #{char.species} and he is #{char.status} on #{char.location["name"]} and originated from #{char.origin["name"]}."
     end
 
     def back
+        puts "To go back type 'menu'"
         input = ''
-        puts "'to see menu 'menu'"
         input = gets.chomp
-        if input == 'menu'
-            welcome
+        i = 0
+        while i < 5  
+            if input == 'exit'
+                exit!
+            elsif input == 'menu'
+                welcome
+            elsif input != 'menu'
+                puts "Sorry invalid try again"
+            end
+            i += 1
+            input = gets.chomp
         end
+            puts "Sorry bye...."
+            sleep 3
     end
 end
